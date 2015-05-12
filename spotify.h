@@ -14,6 +14,7 @@ public:
     void stop(void);
 private:
     string getMetaData(void);
+    string getdBusCommandReply(char* command);
 
 };
 
