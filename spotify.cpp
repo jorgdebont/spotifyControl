@@ -22,19 +22,30 @@ string Spotify::getCommandReply(char *command)
     return result;
 }
 
+string Spotify::getMetaData()
+{
+    string commandToSend;
+    commandToSend  = "dbus-send --print-reply --session ";
+    commandToSend += "--dest=" + this->destination + " " + this->path + " ";
+    commandToSend += "org.freedesktop.DBus.Properties.Get string:";
+    commandToSend += "'" + this->member + "' string:'Metadata'";
+    return getCommandReply(&commandToSend[0]);
+}
+
 void Spotify::play()
 {
-    this->sendPlayerCommand("Play", false);
+    //this->sendPlayerCommand("Play", true);
+    this->getMetaData();
 }
 
 void Spotify::pause()
 {
-    this->sendPlayerCommand("Pause", false);
+    this->sendPlayerCommand("Pause", true);
 }
 
 void Spotify::playPause()
 {
-    this->sendPlayerCommand("PlayPause", false);
+    this->sendPlayerCommand("PlayPause", true);
 }
 
 void Spotify::sendPlayerCommand(string command, bool print_reply)
